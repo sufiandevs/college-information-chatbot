@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1 class="main-heading">Students Panel</h1>
+
+    <div class="container">
+        <div class="main-area">
+
+            <h2>Search Student</h2>
+            <form class="form-box" action="/search_student" method="POST">
+                <input type="text" name="name" placeholder="Enter student name" required>
+                <button type="submit" class="action-btn">Search</button>
+            </form>
+
+            <h2>All Students</h2>
+            <table>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Semester</th>
+                    <th>Email</th>
+                    <th>CGPA</th>
+                </tr>
+                {% for s in students %}
+                <tr>
+                    <td>{{ s.StudentID }}</td>
+                    <td>{{ s.Name }}</td>
+                    <td>{{ s.Department }}</td>
+                    <td>{{ s.Semester }}</td>
+                    <td>{{ s.Email }}</td>
+                    <td>{{ s.CGPA }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+        <div class="side-panel">
+            <h2>Navigation</h2>
+            <a href="/" class="btn-3d">🏠 Home</a>
+            <a href="/admin" class="btn-3d">🔧 Admin Panel</a>
+            <a href="/database" class="btn-3d">🗄️ Database</a>
+            <a href="/admissions" class="btn-3d">📋 Admissions</a>
+            <a href="/queries" class="btn-3d">📜 SQLite Queries</a>
+        </div>
+    </div>
+
+</body>
+</html>

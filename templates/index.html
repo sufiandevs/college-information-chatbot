@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - Iqra University</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1 class="main-heading">AI Chatbot for College Information</h1>
+
+    <div class="container">
+        <!-- Main Chat Area -->
+        <div class="main-area">
+            <h2 style="text-align:center; color:#005a87;">Welcome to Iqra University Information Desk</h2>
+            <p style="text-align:center;">Ask me about admissions, fees, courses, faculty, or students.</p>
+
+            <div class="chatbot-box">
+                <div class="chat-header">🎓 IQRA Chatbot</div>
+                <div class="chat-body" id="chatBody">
+                    <div class="message bot-msg">Hello! I am your college assistant. How can I help you?</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="userInput" class="chat-input" placeholder="Type your question here..." onkeypress="handleKey(event)">
+                    <button class="send-btn" onclick="sendMessage()">➤</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side Panel -->
+        <div class="side-panel">
+            <h2>More Options</h2>
+            <a href="/admin" class="btn-3d">🔧 Admin Panel</a>
+            <a href="/database" class="btn-3d">🗄️ Database</a>
+            <a href="/admissions" class="btn-3d">📋 Admissions</a>
+            <a href="/students" class="btn-3d">👨‍🎓 Students Panel</a>
+            <a href="/queries" class="btn-3d">📜 SQLite Queries</a>
+        </div>
+    </div>
+
+    <script>
+        function handleKey(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            let input = document.getElementById("userInput");
+            let message = input.value.trim();
+            if (message === "") return;
+
+            let chatBody = document.getElementById("chatBody");
+
+            // Show user message
+            let userDiv = document.createElement("div");
+            userDiv.className = "message user-msg";
+            userDiv.innerText = message;
+            chatBody.appendChild(userDiv);
+
+            input.value = "";
+
+            // Send to server
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "message=" + encodeURIComponent(message)
+            })
+            .then(response => response.text())
+            .then(data => {
+                let botDiv = document.createElement("div");
+                botDiv.className = "message bot-msg";
+                botDiv.innerText = data;
+                chatBody.appendChild(botDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            });
+        }
+    </script>
+
+</body>
+</html>

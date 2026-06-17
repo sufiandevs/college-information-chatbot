@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admissions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1 class="main-heading">Admissions Information</h1>
+
+    <div class="container">
+        <div class="main-area">
+
+            <h2>All Admission Records</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Program</th>
+                    <th>Fee</th>
+                    <th>Duration</th>
+                    <th>Eligibility</th>
+                    <th>Last Date</th>
+                </tr>
+                {% for a in admissions %}
+                <tr>
+                    <td>{{ a.AdmissionID }}</td>
+                    <td>{{ a.Program }}</td>
+                    <td>{{ a.Fee }}</td>
+                    <td>{{ a.Duration }}</td>
+                    <td>{{ a.Eligibility }}</td>
+                    <td>{{ a.LastDate }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+        <div class="side-panel">
+            <h2>Navigation</h2>
+            <a href="/" class="btn-3d">🏠 Home</a>
+            <a href="/admin" class="btn-3d">🔧 Admin Panel</a>
+            <a href="/database" class="btn-3d">🗄️ Database</a>
+            <a href="/students" class="btn-3d">👨‍🎓 Students</a>
+            <a href="/queries" class="btn-3d">📜 SQLite Queries</a>
+        </div>
+    </div>
+
+</body>
+</html>

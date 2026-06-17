@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1 class="main-heading">Admin Panel</h1>
+
+    <div class="container">
+        <div class="main-area">
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="flash">{{ msg }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <h2>Add Student</h2>
+            <form class="form-box" action="/add_student" method="POST">
+                <input type="text" name="sid" placeholder="Student ID" required>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="program" placeholder="Program" required>
+                <input type="text" name="dept" placeholder="Department" required>
+                <input type="number" name="semester" placeholder="Semester" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="cgpa" placeholder="CGPA" required>
+                <button type="submit" class="action-btn">Add Student</button>
+            </form>
+
+            <h2>Update Student</h2>
+            <form class="form-box" action="/update_student" method="POST">
+                <input type="text" name="sid" placeholder="Student ID" required>
+                <input type="text" name="name" placeholder="New Name" required>
+                <input type="text" name="program" placeholder="New Program" required>
+                <input type="text" name="dept" placeholder="New Department" required>
+                <input type="number" name="semester" placeholder="New Semester" required>
+                <input type="email" name="email" placeholder="New Email" required>
+                <input type="text" name="cgpa" placeholder="New CGPA" required>
+                <button type="submit" class="action-btn">Update Student</button>
+            </form>
+
+            <h2>Search Student</h2>
+            <form class="form-box" action="/search_student" method="POST">
+                <input type="text" name="name" placeholder="Enter Name" required>
+                <button type="submit" class="action-btn">Search</button>
+            </form>
+
+            <h2>Students List</h2>
+            <table>
+                <tr>
+                    <th>ID</th><th>Name</th><th>Program</th><th>Department</th><th>Semester</th><th>Email</th><th>CGPA</th><th>Action</th>
+                </tr>
+                {% for s in students %}
+                <tr>
+                    <td>{{ s.StudentID }}</td>
+                    <td>{{ s.Name }}</td>
+                    <td>{{ s.Program }}</td>
+                    <td>{{ s.Department }}</td>
+                    <td>{{ s.Semester }}</td>
+                    <td>{{ s.Email }}</td>
+                    <td>{{ s.CGPA }}</td>
+                    <td><a href="/delete_student/{{ s.StudentID }}" style="color:red;">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <h2>Add Admission Record</h2>
+            <form class="form-box" action="/add_admission" method="POST">
+                <input type="text" name="aid" placeholder="Admission ID" required>
+                <input type="text" name="program" placeholder="Program" required>
+                <input type="number" name="fee" placeholder="Fee" required>
+                <input type="text" name="duration" placeholder="Duration" required>
+                <input type="text" name="eligibility" placeholder="Eligibility" required>
+                <input type="text" name="lastdate" placeholder="Last Date" required>
+                <button type="submit" class="action-btn">Add Admission</button>
+            </form>
+
+            <h2>Update Admission Record</h2>
+            <form class="form-box" action="/update_admission" method="POST">
+                <input type="text" name="aid" placeholder="Admission ID" required>
+                <input type="text" name="program" placeholder="Program" required>
+                <input type="number" name="fee" placeholder="Fee" required>
+                <input type="text" name="duration" placeholder="Duration" required>
+                <input type="text" name="eligibility" placeholder="Eligibility" required>
+                <input type="text" name="lastdate" placeholder="Last Date" required>
+                <button type="submit" class="action-btn">Update Admission</button>
+            </form>
+
+            <h2>Admissions List</h2>
+            <table>
+                <tr>
+                    <th>ID</th><th>Program</th><th>Fee</th><th>Duration</th><th>Eligibility</th><th>Last Date</th><th>Action</th>
+                </tr>
+                {% for a in admissions %}
+                <tr>
+                    <td>{{ a.AdmissionID }}</td>
+                    <td>{{ a.Program }}</td>
+                    <td>{{ a.Fee }}</td>
+                    <td>{{ a.Duration }}</td>
+                    <td>{{ a.Eligibility }}</td>
+                    <td>{{ a.LastDate }}</td>
+                    <td><a href="/delete_admission/{{ a.AdmissionID }}" style="color:red;">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+        <div class="side-panel">
+            <h2>Navigation</h2>
+            <a href="/" class="btn-3d">🏠 Home</a>
+            <a href="/database" class="btn-3d">🗄️ Database</a>
+            <a href="/admissions" class="btn-3d">📋 Admissions</a>
+            <a href="/students" class="btn-3d">👨‍🎓 Students</a>
+            <a href="/queries" class="btn-3d">📜 SQLite Queries</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1 class="main-heading">Database Tables</h1>
+
+    <div class="container">
+        <div class="main-area">
+
+            <h2>All Tables in SQLite Database</h2>
+            <ul>
+                {% for t in tables %}
+                    <li><strong>{{ t.name }}</strong></li>
+                {% endfor %}
+            </ul>
+
+            {% for table_name, rows in data.items() %}
+            <h2 style="margin-top:30px; color:#005a87;">Table: {{ table_name }}</h2>
+            <table>
+                <tr>
+                    {% for col in rows[0].keys() %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in rows %}
+                <tr>
+                    {% for value in row %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+            {% endfor %}
+
+        </div>
+
+        <div class="side-panel">
+            <h2>Navigation</h2>
+            <a href="/" class="btn-3d">🏠 Home</a>
+            <a href="/admin" class="btn-3d">🔧 Admin Panel</a>
+            <a href="/admissions" class="btn-3d">📋 Admissions</a>
+            <a href="/students" class="btn-3d">👨‍🎓 Students</a>
+            <a href="/queries" class="btn-3d">📜 SQLite Queries</a>
+        </div>
+    </div>
+
+</body>
+</html>

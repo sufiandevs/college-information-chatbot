@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQLite Queries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <h1 class="main-heading">SQLite Queries Used</h1>
+
+    <div class="container">
+        <div class="main-area">
+
+            <h2>CREATE TABLE</h2>
+            <div class="code-block">
+CREATE TABLE Students (
+    StudentID INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Program TEXT,
+    Department TEXT,
+    Semester INTEGER,
+    Email TEXT,
+    CGPA REAL
+);
+
+CREATE TABLE StudentCourses (
+    StudentID INTEGER,
+    CourseID TEXT,
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+            </div>
+
+            <h2>INSERT DATA</h2>
+            <div class="code-block">
+INSERT INTO Students VALUES 
+(1, 'Ali', 'BSCS', 'Computer Science', 4, 'ali@iqra.edu', 3.5);
+
+INSERT INTO StudentCourses VALUES (1, 'CS101');
+            </div>
+
+            <h2>SELECT Query</h2>
+            <div class="code-block">
+SELECT Fee FROM Admissions WHERE Program = 'BSCS';
+            </div>
+
+            <h2>UPDATE Query</h2>
+            <div class="code-block">
+UPDATE Students 
+SET Name='Ali Khan', Program='BSCS' 
+WHERE StudentID=1;
+            </div>
+
+            <h2>DELETE Query</h2>
+            <div class="code-block">
+DELETE FROM Students WHERE StudentID=1;
+            </div>
+
+            <h2>JOIN Query 1</h2>
+            <div class="code-block">
+SELECT Students.Name, Programs.ProgramName 
+FROM Students 
+JOIN Programs ON Students.Program = Programs.ProgramName;
+            </div>
+
+            <h2>JOIN Query 2 (NEW - Student Courses)</h2>
+            <div class="code-block">
+SELECT Courses.CourseName 
+FROM Students 
+JOIN StudentCourses ON Students.StudentID = StudentCourses.StudentID
+JOIN Courses ON StudentCourses.CourseID = Courses.CourseID
+WHERE Students.Name = 'Ali';
+            </div>
+
+            <h2>SELECT ALL</h2>
+            <div class="code-block">
+SELECT * FROM Admissions;
+            </div>
+
+        </div>
+
+        <div class="side-panel">
+            <h2>Navigation</h2>
+            <a href="/" class="btn-3d">🏠 Home</a>
+            <a href="/admin" class="btn-3d">🔧 Admin Panel</a>
+            <a href="/database" class="btn-3d">🗄️ Database</a>
+            <a href="/admissions" class="btn-3d">📋 Admissions</a>
+            <a href="/students" class="btn-3d">👨‍🎓 Students</a>
+        </div>
+    </div>
+
+</body>
+</html>
